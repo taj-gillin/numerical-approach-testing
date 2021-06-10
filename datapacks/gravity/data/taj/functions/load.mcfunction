@@ -30,7 +30,9 @@ scoreboard objectives add acc.z dummy
 scoreboard objectives remove const
 scoreboard objectives add const dummy
 
+# Value of G is 1000^3 over whatever that is
 scoreboard players set $G const 100
+
 scoreboard players set -1 const -1
 scoreboard players set 10000 const 10000
 scoreboard players set #scale const 10000

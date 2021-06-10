@@ -1,52 +1,37 @@
-# Caculate x acceleration
-scoreboard players set #calc vars 0
+# Sine and Cosine
+function taj:calculate/trig
 
-## Calculate 
-scoreboard players operation #delta vars = @s pos.x
-scoreboard players operation #delta vars -= #current pos.x 
+# dx
+scoreboard players operation #delta pos.x = #current pos.x
+scoreboard players operation #delta pos.x -= @s pos.x
 
-## Numerator = G * m
-scoreboard players operation #numerator vars = $G const
-scoreboard players operation #numerator vars *= @s mass
-scoreboard players operation #numerator vars *= #scale const
-execute if score #delta vars matches ..0 run scoreboard players operation #numerator vars *= -1 const
+# x acceleration = G * m * cos^3 / ∆x^2
+scoreboard players operation #delta acc.x = #cos vars
+scoreboard players operation #delta acc.x *= #cos vars
+scoreboard players operation #delta acc.x *= #cos vars
+scoreboard players operation #delta acc.x /= #delta pos.x
+scoreboard players operation #delta acc.x /= #delta pos.x
+scoreboard players operation #delta acc.x *= @s mass
+scoreboard players operation #delta acc.x /= $G const
 
-## Denominator = |r^2|
-scoreboard players operation #denominator vars = #delta vars
-scoreboard players operation #denominator vars *= #delta vars
-
-## Calculate acceleration using numerator and demoninator
-scoreboard players operation #calc vars = #numerator vars
-scoreboard players operation #calc vars /= #denominator vars
+# add to total
+scoreboard players operation #total acc.x += #delta acc.x
 
 
-## Add to total
-scoreboard players operation #delta acc.x += #calc vars
+# dx
+scoreboard players operation #delta pos.z = #current pos.z
+scoreboard players operation #delta pos.z -= @s pos.z
 
+# x acceleration = G * m * sin^3 / ∆y^2
+scoreboard players operation #delta acc.z = #sin vars
+scoreboard players operation #delta acc.z *= #sin vars
+scoreboard players operation #delta acc.z *= #sin vars
+scoreboard players operation #delta acc.z /= #delta pos.z
+scoreboard players operation #delta acc.z /= #delta pos.z
+scoreboard players operation #delta acc.z *= @s mass
+scoreboard players operation #delta acc.z /= $G const
 
+# add to total
+scoreboard players operation #total acc.z += #delta acc.z
 
-# Caculate z acceleration
-scoreboard players set #calc vars 0
-
-## Calculate 
-scoreboard players operation #delta vars = @s pos.z
-scoreboard players operation #delta vars -= #current pos.z 
-
-## Numerator = G * m
-scoreboard players operation #numerator vars = $G const
-scoreboard players operation #numerator vars *= @s mass
-scoreboard players operation #numerator vars *= #scale const
-execute if score #delta vars matches ..0 run scoreboard players operation #numerator vars *= -1 const
-
-## Denominator = |r^2|
-scoreboard players operation #denominator vars = #delta vars
-scoreboard players operation #denominator vars *= #delta vars
-
-## Calculate acceleration using numerator and demoninator
-scoreboard players operation #calc vars = #numerator vars
-scoreboard players operation #calc vars /= #denominator vars
-
-
-## Add to total
-scoreboard players operation #delta acc.z += #calc vars
-
+tellraw @a [{"text":"dx: "},{"score":{"name": "#delta","objective": "pos.x"}},{"text":" dz: "},{"score":{"name": "#delta","objective": "pos.z"}}]
