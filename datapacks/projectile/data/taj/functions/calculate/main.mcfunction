@@ -1,4 +1,4 @@
-execute unless block ~ ~ ~ air run scoreboard players set @s vel.y 2000
+execute unless block ~ ~ ~ air run kill @s
 
 # Vertical
 
