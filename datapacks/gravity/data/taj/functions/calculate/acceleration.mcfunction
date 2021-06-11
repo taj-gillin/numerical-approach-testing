@@ -34,4 +34,3 @@ scoreboard players operation #delta acc.z /= $G const
 # add to total
 scoreboard players operation #total acc.z += #delta acc.z
 
-tellraw @a [{"text":"dx: "},{"score":{"name": "#delta","objective": "pos.x"}},{"text":" dz: "},{"score":{"name": "#delta","objective": "pos.z"}}]

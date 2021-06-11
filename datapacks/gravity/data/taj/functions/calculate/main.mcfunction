@@ -2,14 +2,13 @@
 tag @s add current
 
 scoreboard players operation #current pos.x = @s pos.x
-scoreboard players operation #current pos.z = @s pos.z
+scoreboard players operation #current pos.z = @s pos.z 
 
 # Iterate over other satellites to calculate acceleration
 scoreboard players set #total acc.x 0
 scoreboard players set #total acc.z 0
 execute as @e[tag=satellite,tag=!current] run function taj:calculate/acceleration
 
-tellraw @a [{"text":"Ax: "},{"score":{"name": "#total","objective": "acc.x"}},{"text":" Az: "},{"score":{"name": "#total","objective": "acc.z"}}]
 
 # Calculate velocity; v+=at
 scoreboard players operation #delta vel.x = #total acc.x
